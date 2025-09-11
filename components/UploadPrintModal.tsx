@@ -82,18 +82,19 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
                 type="text"
                 required
                 placeholder="Jane Doe"
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email <span className="text-gray-400">(optional)</span>
+              </label>
               <input
                 id="email"
                 name="email"
                 type="email"
-                required
                 placeholder="jane@example.com"
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
           </div>
@@ -105,8 +106,9 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
               name="phone"
               type="tel"
               required
-              placeholder="+1 234 567 890"
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="+232 76 123 456"
+              pattern="[\+]?[1-9][\d\s\-\(\)]{6,15}"
+              className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
 
@@ -130,7 +132,7 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
               name="note"
               rows={4}
               placeholder="Any specific instructions or sizes..."
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
 

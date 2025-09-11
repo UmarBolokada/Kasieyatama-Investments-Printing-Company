@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/lib/contexts/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Toaster } from "@/components/ui/sonner"
+import { ToastProvider } from "@/components/ui/Toast"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,13 +37,14 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <CartProvider>
-            <Header />
-            <main className="min-h-screen">
-              {children}
-            </main>
-            <Footer />
+            <ToastProvider>
+              <Header />
+              <main className="min-h-screen">
+                {children}
+              </main>
+              <Footer />
+            </ToastProvider>
           </CartProvider>
-          <Toaster />
         </body>
       </html>
     </ClerkProvider>

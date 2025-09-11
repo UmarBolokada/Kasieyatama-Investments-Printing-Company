@@ -108,7 +108,7 @@ export default function CheckoutButton({ amount, customer, cartItems, isDisabled
       public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
       tx_ref: Date.now().toString(),
       amount: amount,
-      currency: "USD",
+      currency: "SLL",
       payment_options: "card,mobilemoney",
       customer: {
         email: customer.email,

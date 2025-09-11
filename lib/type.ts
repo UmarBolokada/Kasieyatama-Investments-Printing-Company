@@ -124,7 +124,7 @@ export interface Customer {
   preferences?: {
     newsletter: boolean;
     marketing: boolean;
-    currency: 'USD' | 'EUR' | 'GBP' | 'CAD';
+    currency: 'SLL' | 'USD' | 'EUR' | 'GBP' | 'CAD';
     language: 'en' | 'es' | 'fr' | 'de';
   };
   isActive: boolean;
@@ -221,7 +221,7 @@ export interface PrintingService {
   status: 'submitted' | 'reviewing' | 'quoted' | 'approved' | 'production' | 'quality_check' | 'ready' | 'completed' | 'cancelled';
   quote?: {
     amount?: number;
-    currency: 'USD' | 'EUR' | 'GBP' | 'CAD';
+    currency: 'SLL' | 'USD' | 'EUR' | 'GBP' | 'CAD';
     validUntil?: string;
     notes?: string;
   };

@@ -24,6 +24,10 @@ import {
   productStatsQuery,
   submissionByIdQuery,
   cartByClerkIdQuery,
+  messagesQuery,
+  messageByIdQuery,
+  messagesByStatusQuery,
+  messageStatsQuery,
 } from './queries';
 
 // Product Functions
@@ -65,6 +69,11 @@ export async function searchProducts(query: string) {
 // Category Functions
 export async function getCategories() {
   return await client.fetch(categoriesQuery);
+}
+
+export async function getCategoriesLimit(limit: number = 5) {
+  const categories = await client.fetch(categoriesQuery);
+  return categories.slice(0, limit);
 }
 
 export async function getCategory(slug: string) {
@@ -166,7 +175,7 @@ export async function updateOrder(orderId: string, orderData: Record<string, unk
 // Submission Functions
 export async function createSubmission(data: {
   fullName: string;
-  email: string;
+  email?: string;
   phone: string;
   designImage: { asset: { _ref: string } };
   note?: string;
@@ -178,8 +187,70 @@ export async function createSubmission(data: {
   });
 }
 
+// Message Functions
+export async function createMessage(data: {
+  name: string;
+  email?: string;
+  phone: string;
+  subject: string;
+  message: string;
+}) {
+  try {
+    const result = await backendClient.create({
+      _type: 'message',
+      ...data,
+      status: 'new',
+      priority: 'medium',
+      source: 'contact_form',
+      createdAt: new Date().toISOString(),
+    });
+    return result;
+  } catch (error) {
+    console.error('Error in createMessage:', error);
+    throw error;
+  }
+}
+
 export async function getSubmissionById(id: string) {
   return await client.fetch(submissionByIdQuery, { id });
+}
+
+// Message Data Functions
+export async function getMessages() {
+  return await client.fetch(messagesQuery);
+}
+
+export async function getMessageById(id: string) {
+  return await client.fetch(messageByIdQuery, { id });
+}
+
+export async function getMessagesByStatus(status: string) {
+  return await client.fetch(messagesByStatusQuery, { status });
+}
+
+export async function getMessageStats() {
+  return await client.fetch(messageStatsQuery);
+}
+
+export async function updateMessageStatus(id: string, status: string) {
+  return await backendClient
+    .patch(id)
+    .set({ status })
+    .commit();
+}
+
+export async function updateMessagePriority(id: string, priority: string) {
+  return await backendClient
+    .patch(id)
+    .set({ priority })
+    .commit();
+}
+
+export async function addMessageNote(id: string, note: string) {
+  return await backendClient
+    .patch(id)
+    .set({ notes: note })
+    .commit();
 }
 
 // Generate unique order number

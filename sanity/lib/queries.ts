@@ -445,6 +445,68 @@ export const submissionByIdQuery = groq`
   }
 `;
 
+// Message Queries
+export const messagesQuery = groq`
+  *[_type == "message"] | order(_createdAt desc) {
+    _id,
+    _createdAt,
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    status,
+    priority,
+    source,
+    notes,
+    createdAt
+  }
+`;
+
+export const messageByIdQuery = groq`
+  *[_type == "message" && _id == $id][0] {
+    _id,
+    _createdAt,
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    status,
+    priority,
+    source,
+    notes,
+    createdAt
+  }
+`;
+
+export const messagesByStatusQuery = groq`
+  *[_type == "message" && status == $status] | order(_createdAt desc) {
+    _id,
+    _createdAt,
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    status,
+    priority,
+    source,
+    notes,
+    createdAt
+  }
+`;
+
+export const messageStatsQuery = groq`
+  {
+    "totalMessages": count(*[_type == "message"]),
+    "newMessages": count(*[_type == "message" && status == "new"]),
+    "readMessages": count(*[_type == "message" && status == "read"]),
+    "repliedMessages": count(*[_type == "message" && status == "replied"]),
+    "closedMessages": count(*[_type == "message" && status == "closed"])
+  }
+`;
+
 // Cart Queries
 export const cartByClerkIdQuery = groq`
   *[_type == "cart" && clerkId == $clerkId][0] {

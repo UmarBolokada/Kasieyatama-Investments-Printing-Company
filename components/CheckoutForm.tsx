@@ -76,13 +76,12 @@ export default function CheckoutForm() {
   type FlutterwaveResponse = { transaction_id?: string };
   const onSubmit = async (values: CheckoutFormValues) => {
     if (!isSignedIn || state.items.length === 0) return;
-    console.log('Checkout form submission', { values, items: state.items, totals });
-
+   
     window.FlutterwaveCheckout({
         public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
         tx_ref: Date.now().toString(),
         amount: totals.total,
-        currency: "USD",
+        currency: "SLL",
         payment_options: "card,mobilemoney",
         customer: {
           email: values.email,
@@ -103,8 +102,6 @@ export default function CheckoutForm() {
               transaction_id: response.transaction_id,
             }),
           });
-
-          console.log('response from payment endpoint:::::', res)
         },
         onclose: function () {
           console.log("Payment modal closed");

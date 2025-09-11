@@ -14,7 +14,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
-  const { addItem, isInCart, getItemQuantity } = useCart();
+  const { addItem, isInCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
   // const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -50,7 +50,6 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     : 0;
 
   const isInCartItem = isInCart(product._id);
-  const cartQuantity = getItemQuantity(product._id);
 
   return (
     <div className={`group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden ${
@@ -101,7 +100,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
         )}
 
         {/* Title */}
-        <Link href={`/product/${product.slug.current}`}>
+        <Link href={`/products/${product.slug.current}`}>
           <h3 className="text-lg font-semibold text-gray-900 hover:text-primary transition-colors line-clamp-2 mt-1">
             {product.title}
           </h3>
@@ -110,11 +109,11 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
         {/* Price */}
         <div className="flex items-center gap-2 mt-3">
           <span className="text-xl font-bold text-gray-900">
-            ${product.price.toFixed(2)}
+            Le{product.price.toFixed(2)}
           </span>
           {product.compareAtPrice && (
             <span className="text-sm text-gray-500 line-through">
-              ${product.compareAtPrice.toFixed(2)}
+              Le{product.compareAtPrice.toFixed(2)}
             </span>
           )}
         </div>
@@ -137,10 +136,10 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
           {product.stockQuantity > 0 ? (
             <button
               onClick={handleAddToCart}
-              disabled={isLoading}
+              disabled={isLoading || isInCartItem}
               className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                 isInCartItem
-                  ? 'bg-green-500 text-white hover:bg-green-600'
+                  ? 'bg-gray-400 text-white cursor-not-allowed'
                   : 'bg-primary text-white hover:bg-primary/90'
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
@@ -148,7 +147,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
               {isLoading ? (
                 'Adding...'
               ) : isInCartItem ? (
-                `In Cart (${cartQuantity})`
+                'Already in cart'
               ) : (
                 'Add to Cart'
               )}

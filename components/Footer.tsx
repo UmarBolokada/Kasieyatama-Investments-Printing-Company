@@ -5,19 +5,20 @@ import {
   PhoneIcon,
   MapPinIcon,
   FacebookIcon,
-  TwitterIcon,
-  InstagramIcon,
-  LinkedinIcon,
-  Mail,
+  Mail
 } from "lucide-react";
 import ScrollToTop from "./ScrollToTop";
+import { getCategoriesLimit } from "@/sanity/lib/data";
+import { Category } from "@/lib/type";
 
-function Footer() {
+async function Footer() {
+  const categories = await getCategoriesLimit(5);
+  
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white text-sm">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr] gap-4">
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
@@ -36,34 +37,43 @@ function Footer() {
               service.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="#"
+              <Link
+                href="https://www.facebook.com/share/19mPtmBwiZ/?mibextid=wwXIfr"
+                target="_blank"
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Facebook"
               >
                 <FacebookIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="https://vm.tiktok.com/ZNd5nfajA/"
+                target="_blank"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Twitter"
+                aria-label="TikTok"
               >
-                <TwitterIcon className="w-5 h-5" />
-              </a>
-              <a
+                <Image src="/tiktok.png" alt="TikTok" width={20} height={20} className="w-5 h-5" />
+              </Link>
+              <Link
+                href="mailto:kasieyatamainvestments@gmail.com"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="E-mail"
+              >
+                <Mail className="w-5 h-5" />
+              </Link>
+              {/* <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
                 <InstagramIcon className="w-5 h-5" />
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon className="w-5 h-5" />
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -71,54 +81,16 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-6">Our Services</h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/services/business-cards"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Business Cards
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/flyers"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Flyers & Brochures
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/banners"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Banners & Posters
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/stickers"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Stickers & Labels
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/books"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Books & Magazines
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/packaging"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Packaging
-                </Link>
-              </li>
+              {categories.map((category: Category) => (
+                <li key={category._id}>
+                  <Link
+                    href={`/category/${category.slug.current}`}
+                    className="text-gray-300 hover:text-white transition-colors capitalize"
+                  >
+                    {category.title.toLowerCase()}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -158,22 +130,6 @@ function Footer() {
                   FAQ
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/support"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Support
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -182,33 +138,31 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-6">Contact Info</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPinIcon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <MapPinIcon className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-gray-300">
-                    123 Print Street
+                    22 Howe Street,
                     <br />
-                    Design District
-                    <br />
-                    City, State 12345
+                    Western Freetown.
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <PhoneIcon className="w-5 h-5 text-primary flex-shrink-0" />
+                <PhoneIcon className="w-5 h-5 text-white flex-shrink-0" />
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+23272665000"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  (123) 456-7890
+                  +232 (72) 665 - 000
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                <Mail className="w-5 h-5 text-whiteflex-shrink-0" />
                 <a
-                  href="mailto:info@printingpress.com"
+                  href="mailto:kasieyatamainvestments@gmail.com"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  info@printingpress.com
+                  kasieyatamainvestments@gmail.com
                 </a>
               </div>
             </div>
@@ -249,12 +203,7 @@ function Footer() {
               >
                 Terms of Service
               </Link>
-              <Link
-                href="/sitemap"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Sitemap
-              </Link>
+              
             </div>
             <ScrollToTop />
           </div>

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const note = String(form.get('note') || '')
     const file = form.get('design') as File | null
 
-    if (!fullName || !email || !phone || !file) {
+    if (!fullName || !phone || !file) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     // Create submission document via helper
     const submission = await createSubmission({
       fullName,
-      email,
+      email: email.trim() || undefined,
       phone,
       note: note || undefined,
       designImage: { asset: { _ref: asset._id } },

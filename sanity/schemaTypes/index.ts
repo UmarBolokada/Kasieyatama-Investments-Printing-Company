@@ -7,7 +7,8 @@ import Sale from './sale'
 import Customer from './customer'
 import Submission from './submissions'
 import Cart from './cart'
+import Message from './message'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [Product, Category, Order, BlockContent, Sale, Customer, Submission, Cart],
+  types: [Product, Category, Order, BlockContent, Sale, Customer, Submission, Cart, Message],
 }
