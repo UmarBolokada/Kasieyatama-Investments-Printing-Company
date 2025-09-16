@@ -41,6 +41,7 @@ export const productsQuery = groq`
     slug,
     description,
     mainImage,
+    images,
     category->{
       _id,
       title,
@@ -65,6 +66,7 @@ export const featuredProductsQuery = groq`
     slug,
     description,
     mainImage,
+    images,
     category->{
       _id,
       title,
@@ -88,6 +90,7 @@ export const productsByCategoryQuery = groq`
     slug,
     description,
     mainImage,
+    images,
     category->{
       _id,
       title,
@@ -115,6 +118,7 @@ export const searchProductsQuery = groq`
     slug,
     description,
     mainImage,
+    images,
     category->{
       _id,
       title,

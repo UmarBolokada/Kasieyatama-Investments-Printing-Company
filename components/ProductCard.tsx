@@ -16,7 +16,13 @@ interface ProductCardProps {
 export default function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
   const { addItem, isInCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   // const [isWishlisted, setIsWishlisted] = useState(false);
+
+  // Determine secondary image for hover (first additional image if available)
+  const hoverImage = Array.isArray(product.images) && product.images.length > 0
+    ? product.images[0]
+    : undefined;
 
   const handleAddToCart = async () => {
     if (product.stockQuantity === 0) return;
@@ -74,15 +80,32 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
 
              {/* Product Image */}
        <Link href={`/products/${product.slug.current}`} className="block">
-         <div className={`relative overflow-hidden ${
-           viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'aspect-square'
-         }`}>
+         <div
+           className={`relative overflow-hidden ${
+             viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'aspect-square'
+           }`}
+           onMouseEnter={() => setIsHovered(true)}
+           onMouseLeave={() => setIsHovered(false)}
+         >
+           {/* Base image */}
            <Image
              src={urlFor(product.mainImage).url()}
              alt={product.title}
              fill
-             className="object-cover group-hover:scale-105 transition-transform duration-300"
+             className={`object-cover transition duration-300 ${hoverImage ? (isHovered ? 'opacity-0' : 'opacity-100') : (isHovered ? 'scale-105' : '')}`}
+             sizes={viewMode === 'list' ? '128px' : '(max-width: 768px) 100vw, 33vw'}
            />
+           {/* Hover image (if available) */}
+           {hoverImage && (
+             <Image
+               src={urlFor(hoverImage).url()}
+               alt={`${product.title} alternate view`}
+               fill
+               className={`object-cover transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+               sizes={viewMode === 'list' ? '128px' : '(max-width: 768px) 100vw, 33vw'}
+               priority={false}
+             />
+           )}
          </div>
        </Link>
 
@@ -118,48 +141,27 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
           )}
         </div>
 
-        {/* Stock Status */}
-        <div className="mt-2">
-          {product.stockQuantity > 0 ? (
-            <span className="text-sm text-green-600">
-              In Stock ({product.stockQuantity} available)
-            </span>
-          ) : (
-            <span className="text-sm text-red-600">
-              Out of Stock
-            </span>
-          )}
-        </div>
 
         {/* Add to Cart Button */}
         <div className="mt-4">
-          {product.stockQuantity > 0 ? (
-            <button
-              onClick={handleAddToCart}
-              disabled={isLoading || isInCartItem}
-              className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                isInCartItem
-                  ? 'bg-gray-400 text-white cursor-not-allowed'
-                  : 'bg-primary text-white hover:bg-primary/90'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
-            >
-              <ShoppingCartIcon className="w-4 h-4" />
-              {isLoading ? (
-                'Adding...'
-              ) : isInCartItem ? (
-                'Already in cart'
-              ) : (
-                'Add to Cart'
-              )}
-            </button>
-          ) : (
-            <button
-              disabled
-              className="w-full px-4 py-2 rounded-lg font-medium bg-gray-300 text-gray-500 cursor-not-allowed"
-            >
-              Out of Stock
-            </button>
-          )}
+          <button
+            onClick={handleAddToCart}
+            disabled={isLoading || isInCartItem}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+              isInCartItem
+                ? 'bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-primary text-white hover:bg-primary/90'
+            } disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            <ShoppingCartIcon className="w-4 h-4" />
+            {isLoading ? (
+              'Adding...'
+            ) : isInCartItem ? (
+              'Already in cart'
+            ) : (
+              'Add to Cart'
+            )}
+          </button>
         </div>
 
         {/* Tags */}

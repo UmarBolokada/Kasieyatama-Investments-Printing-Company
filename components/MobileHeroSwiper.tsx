@@ -12,7 +12,7 @@ type HeroSlide = {
   title: string;
   description?: string;
   ctaPrimary?: { href: string; label: string };
-  ctaSecondary?: { href: string; label: string };
+  ctaSecondary?: ()=>void;
   align?: "left" | "right"; // which side to place text
 };
 
@@ -24,10 +24,10 @@ type HeroProps = {
   slides?: HeroSlide[]; // optional richer slide content
 };
 
-export default function Hero({
-  images = ["/hero1.png", "/hero2.png", "/hero3.png"],
-  intervalMs = 3000,
-  transitionMs = 800,
+export default function MobileHero({
+  images = ["/hero-mobile1.png", "/hero-mobile2.png", "/hero-mobile3.png"],
+  intervalMs = 4000,
+  transitionMs = 600,
   slides,
 }: HeroProps) {
   const [index, setIndex] = useState(0);
@@ -46,33 +46,32 @@ export default function Hero({
           ? "From small runs to large formats, we deliver premium results on time."
           : "Custom designs, vibrant colors, and durable finishes for every need.",
         ctaPrimary: { href: "/products", label: "Shop Products" },
-        ctaSecondary: { href: "/contact", label: "Get a Quote" },
         align: "left"
       }));
 
-  const next = useCallback(() => setIndex((i) => (i + 1) % computedSlides.length), [computedSlides.length]);
-  const prev = () => setIndex((i) => (i - 1 + computedSlides.length) % computedSlides.length);
+const next = useCallback(() => setIndex((i) => (i + 1) % computedSlides.length), [computedSlides.length]);
+const prev = () => setIndex((i) => (i - 1 + computedSlides.length) % computedSlides.length);
 
-  // Autoplay
-  useEffect(() => {
-    if (paused || computedSlides.length <= 1) return;
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(next, intervalMs);
-    return () => clearInterval(timerRef.current!);
-  }, [paused, computedSlides.length, intervalMs, next]);
+// Autoplay
+useEffect(() => {
+  if (paused || computedSlides.length <= 1) return;
+  if (timerRef.current) clearInterval(timerRef.current);
+  timerRef.current = setInterval(next, intervalMs);
+  return () => clearInterval(timerRef.current!);
+}, [paused, computedSlides.length, intervalMs, next]);
 
-  // Keyboard arrows (← →)
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowRight") next();
-    if (e.key === "ArrowLeft") prev();
-  };
+// Keyboard arrows (← →)
+const onKeyDown = (e: React.KeyboardEvent) => {
+  if (e.key === "ArrowRight") next();
+  if (e.key === "ArrowLeft") prev();
+};
 
   return (
     <section
-      className="hidden sm:flex relative min-h-[600px] items-center justify-center overflow-hidden bg-black"
+      className="sm:hidden relative min-h-[600px] flex items-center justify-center overflow-hidden bg-black"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      onKeyDown={onKeyDown}
+    //   onKeyDown={onKeyDown}
       tabIndex={0}
       aria-roledescription="carousel"
       aria-label="Hero Carousel"
@@ -87,7 +86,7 @@ export default function Hero({
               key={slide.src + i}
               className={`absolute inset-0 transition-opacity ease-in-out ${isActive ? "opacity-100" : "opacity-0"}`}
               style={{ transitionDuration: `${transitionMs}ms` }}
-              aria-hidden={!isActive}
+            //   aria-hidden={!isActive}
             >
               {/* Background image */}
               <div className={`absolute inset-0 ${isActive ? "kenburns" : ""}`}>
@@ -97,13 +96,13 @@ export default function Hero({
                   fill
                   priority={i === 0}
                   sizes="100vw"
-                  className="object-cover sm:object-center object-right"
+                  className="object-cover object-right"
                 />
               </div>
 
               {/* Slide content - on one side, moves with the slide */}
               <div className="relative h-full w-full">
-                <div className={`h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${alignRight ? "justify-end" : "justify-start"}`}>
+                <div className={`h-fit pt-5 mx-auto px-4 sm:px-6 lg:px-8 flex items-center ${alignRight ? "justify-end" : "justify-start"}`}>
                   <div className={`w-full sm:w-[520px] md:w-[560px] lg:w-[600px] ${alignRight ? "text-right" : "text-left"}`}>
                     <h1 className={`text-4xl md:text-6xl font-bold leading-tight ${i === 0 ? "text-white drop-shadow-md" : "text-slate-800"}`}>
                       {slide.title}
@@ -113,24 +112,17 @@ export default function Hero({
                         {slide.description}
                       </p>
                     )}
-                    <div className={`mt-8 flex ${alignRight ? "justify-end" : "justify-start"} gap-4`}>
+                    <div className={`mt-5 flex ${i === 0 ? 'flex-row':'flex-col'} ${alignRight ? "justify-end" : "justify-start"} gap-2`}>
                       {slide.ctaPrimary && (
                         <Link
                           href={slide.ctaPrimary.href}
-                          className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-white font-semibold rounded-lg transition-colors shadow-lg ${i === 0 ? "text-blue-600 hover:bg-gray-100" : "text-black hover:bg-gray-100"}`}
+                          className={`inline-flex items-center px-3 md:px-8 py-3 md:py-4 bg-white font-semibold rounded-lg transition-colors shadow-lg ${i === 0 ? "text-blue-600 hover:bg-gray-100 w-fit" : "text-black hover:bg-gray-100 w-full"}`}
                         >
                           {slide.ctaPrimary.label}
-                          <ArrowRightIcon className="ml-2 w-5 h-5" />
+                          <ArrowRightIcon className="ml-2 w-4 h-4" />
                         </Link>
                       )}
-                      {slide.ctaSecondary && (
-                        <Link
-                          href={slide.ctaSecondary.href}
-                          className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 border-2 font-semibold rounded-lg transition-colors ${i === 0 ? "border-white text-white hover:bg-white/10" : "border-black text-black hover:bg-black/10"}`}
-                        >
-                          {slide.ctaSecondary.label}
-                        </Link>
-                      )}
+                      <SubmitQuoteButton theme={i === 0 ? 'light' : 'dark'} w={i !== 0 ? 'w-full' : undefined} />
                     </div>
                   </div>
                 </div>
@@ -143,7 +135,7 @@ export default function Hero({
       {/* Content overlays removed as requested (no gradient or dark overlay) */}
 
       {/* Nav Buttons */}
-      {computedSlides.length > 1 && (
+      {/* {computedSlides.length > 1 && (
         <>
           <button
             type="button"
@@ -173,7 +165,7 @@ export default function Hero({
             </svg>
           </button>
         </>
-      )}
+      )} */}
 
       {/* Styled-JSX for Ken Burns animation */}
       <style jsx>{`

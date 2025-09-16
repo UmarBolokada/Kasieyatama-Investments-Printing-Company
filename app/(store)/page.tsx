@@ -6,6 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import Categories from '@/components/Categories';
 import { ProductCardType } from '@/lib/type';
 import Hero from '@/components/HeroSwiper';
+import MobileHero from '@/components/MobileHeroSwiper';
 
 export default async function HomePage() {
  const featuredProducts = await getFeaturedProducts()
@@ -16,6 +17,7 @@ export default async function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <Hero />
+      <MobileHero />
 
       {/* Features Section */}
       <section className="py-16 bg-white">

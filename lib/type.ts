@@ -284,6 +284,23 @@ export interface ProductCardType {
       _ref: string;
     };
   };
+  images?: Array<{
+    asset: {
+      _ref: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+    crop?: {
+      top: number;
+      bottom: number;
+      left: number;
+      right: number;
+    };
+  }>;
   price: number;
   compareAtPrice?: number;
   stockQuantity: number;
