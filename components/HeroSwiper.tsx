@@ -25,7 +25,7 @@ type HeroProps = {
 };
 
 export default function Hero({
-  images = ["/hero1.png", "/hero2.png", "/hero3.png"],
+  images = ["/Hero1.png", "/Hero2.png", "/Hero3.png"],
   intervalMs = 3000,
   transitionMs = 800,
   slides,
@@ -46,7 +46,7 @@ export default function Hero({
           ? "From small runs to large formats, we deliver premium results on time."
           : "Custom designs, vibrant colors, and durable finishes for every need.",
         ctaPrimary: { href: "/products", label: "Shop Products" },
-        ctaSecondary: { href: "/contact", label: "Get a Quote" },
+        ctaSecondary: { href: "/upload", label: "Upload Print" },
         align: "left"
       }));
 
@@ -87,7 +87,7 @@ export default function Hero({
               key={slide.src + i}
               className={`absolute inset-0 transition-opacity ease-in-out ${isActive ? "opacity-100" : "opacity-0"}`}
               style={{ transitionDuration: `${transitionMs}ms` }}
-              aria-hidden={!isActive}
+              // aria-hidden={!isActive}
             >
               {/* Background image */}
               <div className={`absolute inset-0 ${isActive ? "kenburns" : ""}`}>
@@ -123,12 +123,14 @@ export default function Hero({
                           <ArrowRightIcon className="ml-2 w-5 h-5" />
                         </Link>
                       )}
+                      {/* <SubmitQuoteButton theme={i === 0 ? 'light':'dark'}/> */}
                       {slide.ctaSecondary && (
                         <Link
                           href={slide.ctaSecondary.href}
                           className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 border-2 font-semibold rounded-lg transition-colors ${i === 0 ? "border-white text-white hover:bg-white/10" : "border-black text-black hover:bg-black/10"}`}
                         >
                           {slide.ctaSecondary.label}
+                          <ArrowRightIcon className="ml-2 w-5 h-5" />
                         </Link>
                       )}
                     </div>

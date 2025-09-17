@@ -6,6 +6,7 @@ import { useCart } from '@/lib/contexts/CartContext';
 import { ProductCardType } from '@/lib/type';
 import { urlFor } from '@/sanity/lib/image';
 import UploadPrintModal from './UploadPrintModal';
+import { useRouter } from 'next/navigation';
 
 interface ProductDetailActionsProps {
   product: ProductCardType;
@@ -20,6 +21,7 @@ export default function ProductDetailActions({ product, quantity = 1 }: ProductD
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   const isInCartItem = isInCart(product._id);
+  const router = useRouter();
 
   const handleAddToCart = async () => {
     if (product.stockQuantity === 0) return;
@@ -91,7 +93,8 @@ export default function ProductDetailActions({ product, quantity = 1 }: ProductD
         </button> */}
 
         <button
-          onClick={() => setIsUploadOpen(true)}
+          onClick={() => router.push('/upload')}
+          // onClick={() => setIsUploadOpen(true)}
           className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
         >
           <UploadIcon className="w-5 h-5" />
@@ -99,7 +102,7 @@ export default function ProductDetailActions({ product, quantity = 1 }: ProductD
         </button>
       </div>
 
-      <UploadPrintModal isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
+      {/* <UploadPrintModal isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} /> */}
     </>
   );
 }

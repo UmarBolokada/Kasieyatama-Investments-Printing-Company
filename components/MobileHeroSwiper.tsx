@@ -12,7 +12,7 @@ type HeroSlide = {
   title: string;
   description?: string;
   ctaPrimary?: { href: string; label: string };
-  ctaSecondary?: ()=>void;
+  ctaSecondary?: { href: string; label: string };
   align?: "left" | "right"; // which side to place text
 };
 
@@ -46,6 +46,7 @@ export default function MobileHero({
           ? "From small runs to large formats, we deliver premium results on time."
           : "Custom designs, vibrant colors, and durable finishes for every need.",
         ctaPrimary: { href: "/products", label: "Shop Products" },
+        ctaSecondary: { href: "/upload", label: "Upload Print" },
         align: "left"
       }));
 
@@ -122,7 +123,16 @@ const onKeyDown = (e: React.KeyboardEvent) => {
                           <ArrowRightIcon className="ml-2 w-4 h-4" />
                         </Link>
                       )}
-                      <SubmitQuoteButton theme={i === 0 ? 'light' : 'dark'} w={i !== 0 ? 'w-full' : undefined} />
+                      {/* <SubmitQuoteButton theme={i === 0 ? 'light' : 'dark'} w={i !== 0 ? 'w-full' : undefined} /> */}
+                      {slide.ctaSecondary && (
+                        <Link
+                          href={slide.ctaSecondary.href}
+                          className={`inline-flex items-center px-6 md:px-8 py-3 md:py-4 border-2 font-semibold rounded-lg transition-colors ${i === 0 ? "border-white text-white hover:bg-white/10" : "border-black text-black hover:bg-black/10"}`}
+                        >
+                          {slide.ctaSecondary.label}
+                          <ArrowRightIcon className="ml-2 w-5 h-5" />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

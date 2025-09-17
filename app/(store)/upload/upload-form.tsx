@@ -1,19 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { XIcon, UploadIcon } from 'lucide-react';
+import { UploadIcon } from 'lucide-react';
+import { useRouter } from "next/navigation";
+// import { useRouter } from 'next/router';
 
-interface UploadPrintModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
-export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalProps) {
+export default function UploadPrint() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-
-  if (!isOpen) return null;
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +35,6 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
       setSuccess(true);
       form.reset();
       setTimeout(() => {
-        onClose();
         setSuccess(false);
       }, 900);
     } catch (err) {
@@ -48,25 +44,16 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-900 flex items-center justify-center">
-      {/* Backdrop */}
-      <button
-        aria-label="Close upload modal"
-        onClick={onClose}
-        className="absolute inset-0 bg-black/50"
-      />
 
+  return (
+    <div className="flex p-4">
       {/* Modal Card */}
-      <div className="relative w-full max-w-lg mx-4 rounded-xl bg-white shadow-xl">
+      <div className="relative w-full max-w-lg mx-4 rounded-xl bg-white border">
         <div className="flex items-start justify-between p-5 border-b border-gray-200">
           <div>
             <h3 className="text-xl font-semibold text-gray-900">Upload your print</h3>
             <p className="text-sm text-gray-600 mt-1">Attach your design and details, we&apos;ll get back to you.</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded hover:bg-gray-100" aria-label="Close">
-            <XIcon className="w-5 h-5 text-gray-600" />
-          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4 text-left">
@@ -137,7 +124,7 @@ export default function UploadPrintModal({ isOpen, onClose }: UploadPrintModalPr
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">Cancel</button>
+            <button type="button" onClick={()=>router.back()} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">Go Back</button>
             <button
               type="submit"
               disabled={isSubmitting}
