@@ -1,6 +1,7 @@
 import React from "react";
 import CartList from "./CartList";
 import OrderSummary from "@/components/OrderSummary";
+import Link from "next/link";
 // import OrderSummary from "./OrderSummary";
 
 export default function CartPage() {
@@ -15,6 +16,7 @@ export default function CartPage() {
           {/* Order Summary */}
           <div className="mt-8 lg:mt-0 lg:col-span-5">
             <OrderSummary />
+            <p className="mt-2 text-sm text-center text-gray-500">Purchases are currently not available, <Link href="/upload" className="underline cursor-pointer font-semibold">Submit a print</Link> instead, we will reach out to you. Thanks!.</p>
           </div>
         </div>
       </div>
