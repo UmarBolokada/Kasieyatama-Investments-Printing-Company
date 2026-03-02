@@ -246,7 +246,8 @@ export default function Header() {
                 {state.items.length}
               </span>
             ) : null}
-            <span className="text-sm">My Cart</span>
+            <span className="text-sm">My Bookmarks</span>
+            {/* <span className="text-sm">My Cart</span> */}
           </Link>
           {/* </SignedIn> */}
 
@@ -413,7 +414,8 @@ export default function Header() {
                 className="px-4 py-2 rounded bg-primary text-white font-medium hover:bg-primary/90 transition flex items-center gap-2 basis-3/5 relative"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>My Cart</span>
+                <span>My Bookmarks</span>
+                {/* <span>My Cart</span> */}
                 {state.items.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-white border-black border text-black rounded-full text-xs px-[5px]">
                     {state.items.length}
@@ -436,7 +438,8 @@ export default function Header() {
                 className="px-4 py-2 rounded bg-primary text-white font-medium hover:bg-primary/90 transition flex items-center gap-2 relative"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>My Cart</span>
+                <span>My Bookmarks</span>
+                {/* <span>My Cart</span> */}
                 {state.items.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-white border-black border text-black rounded-full text-xs px-[5px]">
                     {state.items.length}

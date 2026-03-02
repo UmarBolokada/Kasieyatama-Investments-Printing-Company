@@ -38,7 +38,7 @@ export default defineType({
               name: 'price',
               title: 'Price Snapshot',
               type: 'number',
-              description: 'Price at the time item was added to cart',
+              description: 'Price at the time item was added to bookmarks',
             },
           ],
           preview: {

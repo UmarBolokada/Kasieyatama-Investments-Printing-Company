@@ -67,17 +67,18 @@ export default function ProductDetailActions({ product, quantity = 1 }: ProductD
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              Added to Cart
+              Added to Bookmarks
+              {/* Added to Cart */}
             </>
           ) : isInCartItem ? (
             <>
               <ShoppingCartIcon className="w-5 h-5" />
-              Already in cart
+              Already in bookmarks
             </>
           ) : (
             <>
               <ShoppingCartIcon className="w-5 h-5" />
-              Add to Cart
+              Add to Bookmarks
             </>
           )}
         </button>

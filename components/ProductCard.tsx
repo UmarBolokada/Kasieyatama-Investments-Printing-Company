@@ -157,9 +157,11 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
             {isLoading ? (
               'Adding...'
             ) : isInCartItem ? (
-              'Already in cart'
+              'Already in bookmarks'
+              // 'Already in cart'
             ) : (
-              'Add to Cart'
+              'Add to Bookmarks'
+              // 'Add to Cart'
             )}
           </button>
         </div>

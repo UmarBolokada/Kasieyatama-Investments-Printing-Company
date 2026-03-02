@@ -19,13 +19,13 @@ function CartList() {
 
   const handleRemoveItem = (itemId: string) => {
     const item = state.items.find(item => item._id === itemId);
-    if (item && confirm(`Are you sure you want to remove "${item.title}" from your cart?`)) {
+    if (item && confirm(`Are you sure you want to remove "${item.title}" from your bookmarks?`)) {
       removeItem(itemId);
     }
   };
 
   const handleClearCart = () => {
-    if (confirm("Are you sure you want to clear your cart?")) {
+    if (confirm("Are you sure you want to clear your bookmark?")) {
       clearCart();
     }
   };
@@ -45,10 +45,10 @@ function CartList() {
             </svg>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-            Your cart is empty
+            Your bookmark is empty
           </h2>
           <p className="text-gray-600 mb-8 max-w-md mx-auto">
-            Looks like you haven&apos;t added any products to your cart yet. Start shopping to add some items!
+            Looks like you haven&apos;t added any products to your bookmarks yet. Start shopping to add some items!
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -72,12 +72,14 @@ function CartList() {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Bookmarks</h1>
+        {/* <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1> */}
         <button
           onClick={handleClearCart}
           className="text-sm text-red-600 hover:text-red-800 transition-colors"
         >
-          Clear Cart
+          {/* Clear Cart */}
+          Clear Bookmark
         </button>
       </div>
 

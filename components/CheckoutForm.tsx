@@ -112,10 +112,11 @@ export default function CheckoutForm() {
   if (state.items.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-600 mb-4">Your cart is empty.</p>
+        {/* <p className="text-gray-600 mb-4">Your cart is empty.</p> */}
+        <p className="text-gray-600 mb-4">Your bookmark is empty.</p>
         <div className="flex gap-3 justify-center">
           <Link href="/products" className="px-4 py-2 rounded bg-primary text-white hover:bg-primary/90">Browse products</Link>
-          <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Go to cart</Link>
+          <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Go to Bookmarks</Link>
         </div>
       </div>
     );
@@ -199,7 +200,8 @@ export default function CheckoutForm() {
             <SignInButton mode="modal">
               <button type="button" className="px-4 py-2 rounded bg-primary text-white hover:bg-primary/90">Sign in to continue</button>
             </SignInButton>
-            <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to cart</Link>
+            <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to Bookmark</Link>
+            {/* <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to cart</Link> */}
           </div>
         ) : (
           <div className="flex items-center gap-3">
@@ -214,7 +216,8 @@ export default function CheckoutForm() {
       >
         {scriptLoaded || !isSubmitting ? "Pay Now" : "Loading..."}
       </button>
-            <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to cart</Link>
+            <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to bookmark</Link>
+            {/* <Link href="/cart" className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100">Back to cart</Link> */}
           </div>
         )}
       </form>
